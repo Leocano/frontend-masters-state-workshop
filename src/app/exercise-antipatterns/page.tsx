@@ -223,16 +223,11 @@ function SearchResults() {
     { id: 3, name: 'City Hotel', price: 180, rating: 4.7 },
   ]);
   const [sortBy, setSortBy] = useState('price');
-  const [sortedResults, setSortedResults] = useState<typeof searchResults>([]);
 
-  // This effect is unnecessary - we can derive sorted results
-  useEffect(() => {
-    const sorted = [...searchResults].sort((a, b) => {
-      if (sortBy === 'price') return a.price - b.price;
-      return b.rating - a.rating;
-    });
-    setSortedResults(sorted);
-  }, [searchResults, sortBy]);
+  const sortedResults = [...searchResults].sort((a, b) => {
+    if (sortBy === 'price') return a.price - b.price;
+    return b.rating - a.rating;
+  });
 
   return (
     <Card>
