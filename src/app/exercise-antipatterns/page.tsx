@@ -162,20 +162,20 @@ function TripStatus() {
     isPaid: true,
     isConfirmed: true,
   });
-  const [status, setStatus] = useState('');
 
-  // This effect is unnecessary - we can derive status
-  useEffect(() => {
+  const getStatus = () => {
     const today = new Date();
     const start = new Date(trip.startDate);
     const end = new Date(trip.endDate);
 
-    if (!trip.isPaid) setStatus('Payment Pending');
-    else if (!trip.isConfirmed) setStatus('Awaiting Confirmation');
-    else if (today < start) setStatus('Upcoming');
-    else if (today >= start && today <= end) setStatus('In Progress');
-    else setStatus('Completed');
-  }, [trip]);
+    if (!trip.isPaid) return 'Payment Pending';
+    else if (!trip.isConfirmed) return 'Awaiting Confirmation';
+    else if (today < start) return 'Upcoming';
+    else if (today >= start && today <= end) return 'In Progress';
+    else return 'Completed';
+  }
+
+  const status = getStatus();
 
   const getStatusVariant = (status: string) => {
     switch (status) {
