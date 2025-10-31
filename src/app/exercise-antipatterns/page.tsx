@@ -113,17 +113,14 @@ function TripSummary() {
 // Problem: Storing available dates in state when they can be derived from booked dates
 function AvailableDates() {
   const [bookedDates] = useState(['2024-06-01', '2024-06-02', '2024-06-03']);
-  const [availableDates, setAvailableDates] = useState<string[]>([]);
 
-  // This effect is unnecessary - we can derive available dates
-  useEffect(() => {
-    const allDates = Array.from({ length: 30 }, (_, i) => {
+  const allDates = Array.from({ length: 30 }, (_, i) => {
       const date = new Date('2024-06-01');
       date.setDate(date.getDate() + i);
       return date.toISOString().split('T')[0];
     });
-    setAvailableDates(allDates.filter((date) => !bookedDates.includes(date)));
-  }, [bookedDates]);
+
+  const availableDates = allDates.filter((date) => !bookedDates.includes(date));
 
   return (
     <Card>
